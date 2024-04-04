@@ -1,0 +1,16 @@
+# Make sure EXO module is installed & imported - https://learn.microsoft.com/en-us/powershell/exchange/exchange-online-powershell-v2?view=exchange-ps
+# connect to exchange online service with your admin account
+
+Connect-ExchangeOnline
+
+# check groups for whom a particular user has SendAs permission
+
+Get-DistributionGroup -ResultSize Unlimited | Get-RecipientPermission -Trustee "DisplayName" # https://learn.microsoft.com/en-us/powershell/module/exchange/get-distributiongroup?view=exchange-ps,https://learn.microsoft.com/en-us/powershell/module/exchange/get-recipientpermission?view=exchange-ps
+Get-DynamicDistributionGroup -ResultSize Unlimited | Get-RecipientPermission -Trustee "DisplayName" # https://learn.microsoft.com/en-us/powershell/module/exchange/get-dynamicdistributiongroup?view=exchange-ps
+Get-UnifiedGroup -ResultSize Unlimited | Get-RecipientPermission -Trustee "DisplayName" # https://learn.microsoft.com/en-us/powershell/module/exchange/get-unifiedgroup?view=exchange-ps
+
+# check groups for whom a particular user has Send on Behalf permission
+
+Get-DistributionGroup -ResultSize Unlimited | Where-Object {$_.GrantSendOnBehalfTo -eq "DisplayName"}           # https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/where-object?view=powershell-7.4
+Get-UnifiedGroup -ResultSize Unlimited | Where-Object {$_.GrantSendOnBehalfTo -eq "DisplayName"}
+Get-DynamicDistributionGroup -ResultSize Unlimited | Where-Object {$_.GrantSendOnBehalfTo -eq "DisplayName"}
